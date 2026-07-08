@@ -1,0 +1,16 @@
+{
+  "schema": "tiger.registry/v1",
+  "slug": "testwidget",
+  "module": "Test Widget",
+  "vendor": "Acme",
+  "repository": "https://github.com/Acme/TestWidget",
+  "website": "https://example.com",
+  "contact": "support@example.com",
+  "version": "0.1.0",
+  "ref": "v0.1.0",
+  "description": "A throwaway listing used to prove the tiger-vendor-bot pipeline. Do not merge.",
+  "keywords": ["test"],
+  "category": "Content",
+  "license": "MIT",
+  "pricing": { "model": "free", "pro_url": null }
+}
