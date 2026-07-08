@@ -49,12 +49,10 @@ MODEL_TOKEN=… php scripts/review-ai.php data/<Org>_<Repo>.json   # live verdic
 
 ## Where the findings land
 
-**Default (built, no extra setup): a sticky comment on the submission PR** — the bot has
-`pull-requests: write` on this repo via the built-in `GITHUB_TOKEN`, so it comments here. Public,
-accountable, zero friction.
+**A sticky comment on the submission PR.** The submitter opens their PR *against this repo*, so it
+is *their* PR — they watch it, get the bot's comment inline, and see it merged or closed. The bot
+has `pull-requests: write` here via the built-in `GITHUB_TOKEN`, so there is **zero** per-vendor
+setup. That comment is the whole feedback loop.
 
-**Optional upgrade — a findings PR opened on the *vendor's own* repo** (the "we send your repo a
-public PR" vision). That's cross-repo write, which the default token can't do: it needs a **GitHub
-App** the vendor installs (or a bot PAT with access). Wire it as a follow-up step that calls the
-App's token instead of `GITHUB_TOKEN`; everything up to it — the report body — is already produced.
-Kept out of the default path so the registry works with **zero** per-vendor setup.
+We deliberately do **not** open a findings PR back on the vendor's own repo: it would need a GitHub
+App the vendor installs, and it's redundant — they already see (and own) their submission PR here.
