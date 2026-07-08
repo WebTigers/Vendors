@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/WebTigers/Vendors/main/schema/registry.v1.json",
+  "title": "Tiger Vendor Registry listing (v1)",
+  "description": "One file per module at data/<GitHubOrg>_<GitHubRepo>.json. Thin metadata that points at the module's public repo; the rich description lives in the repo's TIGER.md.",
+  "type": "object",
+  "required": ["schema", "slug", "module", "vendor", "repository", "version", "description", "license", "pricing"],
+  "additionalProperties": false,
+  "properties": {
+    "schema":     { "const": "tiger.registry/v1" },
+    "slug":       { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$", "description": "Module install slug (== module.json slug). Not the repo name." },
+    "module":     { "type": "string", "maxLength": 120, "description": "Human module name." },
+    "vendor":     { "type": "string", "maxLength": 120, "description": "Vendor / author name." },
+
+    "repository": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/[^/]+/[^/]+/?$", "description": "PUBLIC GitHub repo. Private repos are rejected." },
+    "website":    { "type": "string", "format": "uri" },
+    "contact":    { "type": "string", "description": "Support email or URL." },
+
+    "version":    { "type": "string", "description": "Latest vetted version." },
+    "ref":        { "type": "string", "description": "The pinned, reviewed release tag/SHA (what installs)." },
+
+    "logo":       { "type": "string", "format": "uri", "description": "Square logo (raw URL)." },
+    "hero":       { "type": "string", "format": "uri", "description": "Wide hero/banner image (raw URL)." },
+
+    "description":{ "type": "string", "maxLength": 300, "description": "One-line summary for the search card." },
+    "tiger_md":   { "type": "string", "format": "uri", "description": "Raw URL of the repo's TIGER.md (the 'View more' modal content)." },
+
+    "keywords":   { "type": "array", "items": { "type": "string" }, "maxItems": 12 },
+    "category":   { "type": "string", "enum": ["Content", "Commerce", "Auth", "Media", "Developer", "Integration", "Theme", "Utility", "Other"] },
+    "license":    { "type": "string", "description": "SPDX id or 'Proprietary'. Public code is required; the license may still be proprietary." },
+
+    "pricing": {
+      "type": "object",
+      "required": ["model"],
+      "additionalProperties": false,
+      "properties": {
+        "model":   { "type": "string", "enum": ["free", "freemium", "paid"] },
+        "pro_url": { "type": ["string", "null"], "description": "Where to buy the pro tier (if any)." }
+      }
+    },
+    "requires": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tiger": { "type": "string" },
+        "php":   { "type": "string" }
+      }
+    },
+
+    "review": {
+      "type": "object",
+      "description": "Set by the tiger-vendor-bot, not the submitter.",
+      "additionalProperties": false,
+      "properties": {
+        "status":       { "type": "string", "enum": ["pending", "accepted", "rejected"] },
+        "reviewed_ref": { "type": "string" },
+        "reviewed_at":  { "type": "string" },
+        "reviewer":     { "type": "string" },
+        "notes":        { "type": "string" }
+      }
+    }
+  }
+}

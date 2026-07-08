@@ -1,0 +1,42 @@
+name: Review submissions
+
+# The tiger-vendor-bot. Runs a few times a day over open submission PRs: validates each
+# changed listing (scripts/review.php), then (TODO) does an AI review pass and opens a PR
+# on the vendor's repo with the findings. Also runnable on-demand.
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # every 6 hours
+  pull_request:
+    paths:
+      - 'data/*.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      # On a PR: validate the listing files this PR changed.
+      - name: Validate changed listings
+        if: github.event_name == 'pull_request'
+        run: |
+          for f in $(git diff --name-only origin/main...HEAD -- 'data/*.json' | grep -v 'index.json' || true); do
+            echo "::group::$f"
+            php scripts/review.php "$f" || echo "::warning file=$f::listing needs changes"
+            echo "::endgroup::"
+          done
+
+      # TODO (scheduled run): enumerate OPEN submission PRs via the API, run review.php on each,
+      #   perform the AI review pass, and open a findings PR on the vendor's repo. Needs a bot
+      #   token (GH App) + the LLM key in secrets. Stubbed here to keep the scaffold key-free.
+      - name: Scheduled sweep (stub)
+        if: github.event_name == 'schedule'
+        run: echo "TODO: sweep open PRs + AI review + post findings PR to each vendor repo."

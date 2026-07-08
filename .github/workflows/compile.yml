@@ -1,0 +1,35 @@
+name: Compile index
+
+# Rebuild data/index.json whenever a listing changes (after a PR merges to main).
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/*.json'
+      - 'scripts/compile-index.php'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+      - name: Compile index.json
+        run: php scripts/compile-index.php
+      - name: Commit if changed
+        run: |
+          if ! git diff --quiet data/index.json; then
+            git config user.name  "tiger-vendor-bot"
+            git config user.email "bot@webtigers.com"
+            git add data/index.json
+            git commit -m "chore: recompile index.json"
+            git push
+          else
+            echo "index.json already up to date."
+          fi
