@@ -1,4 +1,0 @@
-# Curated paid placement — only the registry owner may change it. With branch protection's
-# "Require review from Code Owners" enabled, a PR touching this file needs @WebTigers approval.
-# (The guard-sponsored.yml workflow is the hard CI gate; this is the review/governance layer.)
-/data/sponsored.json  @WebTigers
