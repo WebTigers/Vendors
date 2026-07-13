@@ -1,7 +1,7 @@
 {
     "schema": "tiger.registry-index/v1",
-    "generated_at": "2026-07-08T14:22:24+00:00",
-    "count": 1,
+    "generated_at": "2026-07-13T16:53:01+00:00",
+    "count": 2,
     "modules": [
         {
             "schema": "tiger.registry/v1",
@@ -39,6 +39,47 @@
                 "reviewed_at": "2026-07-08",
                 "reviewer": "tiger-vendor-bot",
                 "notes": "Public repo; valid module.json + TIGER.md; MIT license; release v0.1.0 present; module layout conforms."
+            },
+            "type": "plugin"
+        },
+        {
+            "schema": "tiger.registry/v1",
+            "type": "theme",
+            "slug": "theme-grey-mist",
+            "module": "Grey Mist",
+            "vendor": "WebTigers",
+            "repository": "https://github.com/WebTigers/theme-grey-mist",
+            "website": "https://webtigers.com",
+            "contact": "support@webtigers.com",
+            "version": "0.1.0-beta",
+            "ref": "v0.1.0-beta",
+            "hero": "https://raw.githubusercontent.com/WebTigers/theme-grey-mist/v0.1.0-beta/assets/img/bg-masthead.jpg",
+            "description": "A free, MIT one-page Bootstrap 5 theme for Tiger \u2014 self-contained, zero external dependencies, fully editable CSS/JS.",
+            "tiger_md": "https://raw.githubusercontent.com/WebTigers/theme-grey-mist/v0.1.0-beta/TIGER.md",
+            "keywords": [
+                "theme",
+                "bootstrap",
+                "one-page",
+                "landing",
+                "grayscale",
+                "mit",
+                "responsive"
+            ],
+            "license": "MIT",
+            "pricing": {
+                "model": "free",
+                "pro_url": null
+            },
+            "requires": {
+                "tiger": ">=0.5",
+                "php": ">=8.1"
+            },
+            "review": {
+                "status": "accepted",
+                "reviewed_ref": "v0.1.0-beta",
+                "reviewed_at": "2026-07-13",
+                "reviewer": "tiger-vendor-bot",
+                "notes": "Public repo; theme.json + slug match (theme-grey-mist); TIGER.md present; MIT; release v0.1.0-beta present. First theme accepted via the theme.json manifest path."
             }
         }
     ]
