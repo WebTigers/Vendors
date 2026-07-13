@@ -1,6 +1,6 @@
 {
     "schema": "tiger.registry-index/v1",
-    "generated_at": "2026-07-13T16:53:01+00:00",
+    "generated_at": "2026-07-13T17:39:53+00:00",
     "count": 2,
     "modules": [
         {
@@ -54,6 +54,11 @@
             "version": "0.1.0-beta",
             "ref": "v0.1.0-beta",
             "hero": "https://raw.githubusercontent.com/WebTigers/theme-grey-mist/v0.1.0-beta/assets/img/bg-masthead.jpg",
+            "screenshots": [
+                "assets/img/ipad.png",
+                "assets/img/demo-image-01.jpg",
+                "assets/img/demo-image-02.jpg"
+            ],
             "description": "A free, MIT one-page Bootstrap 5 theme for Tiger \u2014 self-contained, zero external dependencies, fully editable CSS/JS.",
             "tiger_md": "https://raw.githubusercontent.com/WebTigers/theme-grey-mist/v0.1.0-beta/TIGER.md",
             "keywords": [
