@@ -22,5 +22,13 @@
   "license": "MIT",
 
   "pricing": { "model": "free", "pro_url": null },
-  "requires": { "tiger": ">=0.5", "php": ">=8.1" }
+  "requires": { "tiger": ">=0.5", "php": ">=8.1" },
+
+  "review": {
+    "status": "accepted",
+    "reviewed_ref": "v0.1.0-beta",
+    "reviewed_at": "2026-07-13",
+    "reviewer": "tiger-vendor-bot",
+    "notes": "Public repo; theme.json + slug match (theme-grey-mist); TIGER.md present; MIT; release v0.1.0-beta present. First theme accepted via the theme.json manifest path."
+  }
 }
