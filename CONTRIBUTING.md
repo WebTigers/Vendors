@@ -49,18 +49,37 @@ Create **`data/<GitHubOrg>_<GitHubRepo>.json`** (exact repo org + name, e.g.
 
 Leave out the `review` block — the bot writes that.
 
-### Images (logo / hero / screenshots)
+### Media (logo / hero / screenshots / video)
 
-Images live in **your module's own repo** (e.g. `assets/`, `assets/screenshots/`) — the registry
-only points at them, never hosts them. In `logo`, `hero`, and `screenshots[]` you can give either:
+Media lives in **your module's own repo** (e.g. `assets/`, `assets/screenshots/`) — the registry
+only points at it, never hosts it. In `logo`, `hero`, `screenshots[]`, and `video` you can give
+either:
 
 - a **repo-relative path** (`assets/screenshots/01.png`) — Tiger resolves it against your pinned
-  `ref` to `https://raw.githubusercontent.com/<org>/<repo>/<ref>/assets/screenshots/01.png`. Use the
-  **same paths in your `README.md`** (GitHub renders them relatively) so one set of files serves both. *(Recommended.)*
-- a **full raw URL** (`https://raw.githubusercontent.com/...`) — used as-is.
+  `ref` to `https://raw.githubusercontent.com/<org>/<repo>/<ref>/…`. Use the **same paths in your
+  `README.md`** (GitHub renders them relatively) so one set of files serves both. *(Recommended.)*
+- a **full URL** — used as-is.
 
-`screenshots[]` is shown as a **lightbox gallery** on your directory card. Pin to a release `ref`
-(not `main`) so the images match the reviewed version.
+Pin media to a release `ref` (not `main`) so it matches the reviewed version.
+
+**Sizes & formats:**
+
+| Field | Recommended | Notes |
+|---|---|---|
+| `logo` | **256×256 PNG** (transparent), static | Shown small but crisp on retina. **Not SVG** — GitHub raw serves SVG as `text/plain`, so it won't render. Avoid animated GIF logos (distracting + heavy). |
+| `hero` | **~1200×630**, < 400 KB | Wide banner, cropped `cover`. A short animated WebP/GIF demo is fine here. |
+| `screenshots[]` | **1280×720 (16:9)**, PNG/WebP, < 300 KB each, ≤ 6–8 | Consistent aspect ratio reads as designed. Shown as a **lightbox gallery**. |
+
+**Video** (`video`) — opened in the lightbox from a play tile:
+
+- **Self-hosted** (best, no third party): a repo-relative `.mp4`/`.webm`, or a full URL to your own
+  CDN. GitHub raw *can* serve `.mp4` (Range requests work), but it sends `application/octet-stream`,
+  which plays in Chrome/Firefox but is **unreliable in Safari** — for a production demo prefer a real
+  CDN URL (correct `video/mp4`). Keep repo-hosted clips short (100 MB file cap; avoid history bloat).
+- **YouTube / Vimeo**: paste a normal watch link. It's embedded **lazily via `youtube-nocookie`** —
+  nothing loads from Google until a viewer clicks play.
+- Object form adds a **repo-hosted poster** so the card shows no third-party thumbnail:
+  `"video": { "src": "https://youtu.be/…", "poster": "assets/demo-poster.jpg" }`.
 
 ## 3. Open the PR
 
