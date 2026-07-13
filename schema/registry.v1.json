@@ -8,7 +8,8 @@
   "additionalProperties": false,
   "properties": {
     "schema":     { "const": "tiger.registry/v1" },
-    "slug":       { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$", "description": "Module install slug (== module.json slug). Not the repo name." },
+    "slug":       { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$", "description": "Module install slug. For a code module == module.json slug; for a theme == 'theme-' + theme.json key (e.g. theme-grey-mist). Not the repo name." },
+    "type":       { "type": "string", "enum": ["theme", "app", "plugin"], "description": "Searchable kind label — NON-behavioral. 'theme' = presentation, 'app' = a large feature/product, 'plugin' = a small tweak. Tiger detects real capabilities (theme.json, migrations/) at activation; this is only a directory filter. Optional; defaults to 'plugin' in the index if omitted." },
     "module":     { "type": "string", "maxLength": 120, "description": "Human module name." },
     "vendor":     { "type": "string", "maxLength": 120, "description": "Vendor / author name." },
 
@@ -26,7 +27,7 @@
     "tiger_md":   { "type": "string", "format": "uri", "description": "Raw URL of the repo's TIGER.md (the 'View more' modal content)." },
 
     "keywords":   { "type": "array", "items": { "type": "string" }, "maxItems": 12 },
-    "category":   { "type": "string", "enum": ["Content", "Commerce", "Auth", "Media", "Developer", "Integration", "Theme", "Utility", "Other"] },
+    "category":   { "type": "string", "description": "Subject-matter DOMAIN (orthogonal to `type`). A theme can still be a Media-domain theme.", "enum": ["Content", "Commerce", "Auth", "Media", "Developer", "Integration", "Utility", "Other"] },
     "license":    { "type": "string", "description": "SPDX id or 'Proprietary'. Public code is required; the license may still be proprietary." },
 
     "pricing": {

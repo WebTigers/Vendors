@@ -5,8 +5,8 @@
  * The open, AI-reviewed submission flow:
  *   1. A vendor opens a PR adding data/<Org>_<Repo>.json.
  *   2. A scheduled Action (a few times/day) runs this over the changed listing(s):
- *        a. DETERMINISTIC checks (below) — schema, public repo, module.json + TIGER.md present
- *           at the pinned ref, license, slug match, release exists.
+ *        a. DETERMINISTIC checks (below) — schema, public repo, a manifest (module.json OR a
+ *           theme's theme.json) + TIGER.md present at the pinned ref, license, slug match.
  *        b. AI review (stubbed) — an LLM pass for quality/safety heuristics on the module code.
  *   3. The bot opens a PR **on the vendor's own repo** with its findings (public + accountable).
  *   4. On accept it sets review.status = "accepted" and merges the listing; CI recompiles
@@ -64,13 +64,16 @@ if (preg_match('~^https://github\.com/([^/]+)/([^/]+?)/?$~', (string) ($listing[
     $fail('repository must be a https://github.com/<org>/<repo> URL');
 }
 
-// --- the pinned ref exists + carries a valid module.json (slug match) + a TIGER.md ---
+// --- the pinned ref exists + carries a valid manifest (slug match) + a TIGER.md ---
+// Manifest detection is PRESENCE-based, not type-based: a code module ships module.json;
+// a theme ships theme.json (its module slug is 'theme-' + the manifest key). We accept
+// whichever exists — the listing's `type` is only a search label and never gates this.
 $ref = (string) ($listing['ref'] ?? ($listing['version'] ?? 'main'));
 if ($org) {
     $mj = http(RAW . "/{$org}/{$repo}/{$ref}/module.json");
-    if ($mj === null) {
-        $fail("no module.json at {$org}/{$repo}@{$ref}");
-    } else {
+    $tj = $mj === null ? http(RAW . "/{$org}/{$repo}/{$ref}/theme.json") : null;
+
+    if ($mj !== null) {                                        // code module (module.json)
         $m = json_decode($mj, true);
         if (!is_array($m) || empty($m['slug'])) {
             $fail('module.json is invalid');
@@ -79,7 +82,21 @@ if ($org) {
         } else {
             $pass('module.json present + slug matches');
         }
+    } elseif ($tj !== null) {                                  // theme (theme.json)
+        $t = json_decode($tj, true);
+        if (!is_array($t) || empty($t['key'])) {
+            $fail('theme.json is invalid (needs a "key")');
+        } elseif (($t['type'] ?? '') !== 'theme') {
+            $fail('theme.json "type" must be "theme"');
+        } elseif (('theme-' . $t['key']) !== ($listing['slug'] ?? '')) {
+            $fail("slug mismatch: listing='{$listing['slug']}' expected 'theme-{$t['key']}' (theme.json key)");
+        } else {
+            $pass("theme.json present + slug matches (theme-{$t['key']})");
+        }
+    } else {
+        $fail("no module.json or theme.json at {$org}/{$repo}@{$ref}");
     }
+
     if (http(RAW . "/{$org}/{$repo}/{$ref}/TIGER.md") === null) {
         $fail('no TIGER.md (the vendor description shown in the directory)');
     } else {
