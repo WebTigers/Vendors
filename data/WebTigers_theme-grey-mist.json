@@ -14,6 +14,11 @@
   "ref": "v0.1.0-beta",
 
   "hero": "https://raw.githubusercontent.com/WebTigers/theme-grey-mist/v0.1.0-beta/assets/img/bg-masthead.jpg",
+  "screenshots": [
+    "assets/img/ipad.png",
+    "assets/img/demo-image-01.jpg",
+    "assets/img/demo-image-02.jpg"
+  ],
 
   "description": "A free, MIT one-page Bootstrap 5 theme for Tiger — self-contained, zero external dependencies, fully editable CSS/JS.",
   "tiger_md": "https://raw.githubusercontent.com/WebTigers/theme-grey-mist/v0.1.0-beta/TIGER.md",

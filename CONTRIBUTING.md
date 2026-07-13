@@ -49,6 +49,19 @@ Create **`data/<GitHubOrg>_<GitHubRepo>.json`** (exact repo org + name, e.g.
 
 Leave out the `review` block — the bot writes that.
 
+### Images (logo / hero / screenshots)
+
+Images live in **your module's own repo** (e.g. `assets/`, `assets/screenshots/`) — the registry
+only points at them, never hosts them. In `logo`, `hero`, and `screenshots[]` you can give either:
+
+- a **repo-relative path** (`assets/screenshots/01.png`) — Tiger resolves it against your pinned
+  `ref` to `https://raw.githubusercontent.com/<org>/<repo>/<ref>/assets/screenshots/01.png`. Use the
+  **same paths in your `README.md`** (GitHub renders them relatively) so one set of files serves both. *(Recommended.)*
+- a **full raw URL** (`https://raw.githubusercontent.com/...`) — used as-is.
+
+`screenshots[]` is shown as a **lightbox gallery** on your directory card. Pin to a release `ref`
+(not `main`) so the images match the reviewed version.
+
 ## 3. Open the PR
 
 Open a pull request with just that one file. The **`tiger-vendor-bot`** runs a few times a
