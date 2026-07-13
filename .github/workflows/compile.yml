@@ -1,42 +1,35 @@
 name: Compile index
 
-# Rebuild data/index.json INSIDE the PR and commit it to the PR branch, so the fresh index
-# merges together with the listing change. main is then only ever updated through a merged PR —
-# which lets branch protection require the `guard` check on main WITHOUT blocking a post-merge
-# bot push (a push to protected main can't satisfy a pull_request-triggered check, so it'd be
-# rejected). Fork PRs add PENDING listings, which don't change index.json, so skipping them is safe.
+# Rebuild data/index.json whenever a listing changes (after a PR merges to main, or any push).
 on:
-  pull_request:
+  push:
+    branches: [main]
     paths:
       - 'data/*.json'
       - 'scripts/compile-index.php'
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   compile:
-    # A workflow can't push to a fork's branch; fork PRs don't alter index.json anyway (pending
-    # listings aren't indexed). Same-repo PRs (incl. the owner's acceptance PRs) get the commit.
-    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
       - name: Compile index.json
         run: php scripts/compile-index.php
-      - name: Commit to the PR branch if changed
+      - name: Commit if changed
         run: |
           if ! git diff --quiet data/index.json; then
             git config user.name  "tiger-vendor-bot"
             git config user.email "bot@webtigers.com"
             git add data/index.json
             git commit -m "chore: recompile index.json"
-            git push origin "HEAD:${{ github.head_ref }}"
+            git push
           else
             echo "index.json already up to date."
           fi

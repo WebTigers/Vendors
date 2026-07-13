@@ -38,18 +38,14 @@ sponsorship is a public commit) and **antifragility**.
   (`module.json` else `theme.json`), never by `type`. A theme's slug is `theme-` + its
   `theme.json` `key`.
 
-## Sponsorship — `data/sponsored.json` (WebTigers-curated)
+## Sponsorship lives in its own repo — not here
 
-Placement is monetizable but **transparent**: [`data/sponsored.json`](data/sponsored.json) (edited
-only by WebTigers) maps a listing key `<Org>_<Repo>` → `{ priority, label, until }`. It is **not**
-baked into `index.json` — **Tiger fetches it alongside the index and merges the `priority` at search
-time** (client-side, in `Tiger_Module_Registry`), so placement changes need no recompile. In the
-directory's default **Featured** sort, higher `priority` floats up with a badge; the Title and
-Latest sorts ignore it. Vendors **cannot** rank themselves — it's a separate curated file, a public
-commit, and auto-expires via `until`. **Enforced in CI:** `.github/workflows/guard-sponsored.yml`
-hard-fails any PR that modifies `data/sponsored.json` unless it's from the registry owner
-(`author_association == OWNER`, so it survives a rename), and `.github/CODEOWNERS` requires owner
-review. Make the guard a **required status check** in branch protection to seal it.
+Curated paid placement is **not** in this repo. It's [WebTigers/Sponsors](https://github.com/WebTigers/Sponsors)
+(`sponsors.json`, ranks only). Keeping it separate makes access control just repo permissions:
+**this open catalog takes community PRs; that repo takes none** — no guard workflow, no CODEOWNERS,
+no branch protection needed here. Tiger fetches both the index and the sponsors map and merges the
+sponsor `priority` into the directory's **Featured** sort at search time. Nothing about placement is
+editable or gated in this repo.
 
 ## Validate locally before you PR
 

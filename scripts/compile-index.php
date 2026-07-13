@@ -7,9 +7,9 @@
  * change under data/ (see .github/workflows/compile.yml).
  *
  * The index is kept PURE vendor data — sorted alphabetically by module name as a stable default.
- * SPONSORSHIP is NOT baked in here: Tiger fetches data/sponsored.json alongside the index and
- * merges the `priority` at search time (client-side, so placement updates need no recompile).
- * `type` defaults to "plugin" when a listing omits it (search label only; see schema).
+ * SPONSORSHIP lives in its own repo (WebTigers/Sponsors), never here: Tiger fetches that ranks map
+ * separately and merges `priority` at search time. `type` defaults to "plugin" when a listing omits
+ * it (search label only; see schema).
  *
  *   php scripts/compile-index.php
  */
@@ -17,8 +17,7 @@ $dataDir = dirname(__DIR__) . '/data';
 $modules = [];
 
 foreach (glob($dataDir . '/*.json') as $file) {
-    // index.json is our output; sponsored.json is a curated overlay Tiger merges at runtime.
-    if (in_array(basename($file), ['index.json', 'sponsored.json'], true)) {
+    if (basename($file) === 'index.json') {   // our compiled output
         continue;
     }
     $json = json_decode((string) file_get_contents($file), true);
