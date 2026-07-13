@@ -1,0 +1,44 @@
+name: Guard sponsored.json
+
+# data/sponsored.json is WebTigers-curated PAID PLACEMENT (priority + badge). Anyone could
+# otherwise open a PR sponsoring themselves for free. This gate hard-fails any PR that touches
+# that file unless it comes from the registry owner. It always runs (no paths filter) so it can
+# safely be a REQUIRED status check. Runs from the base branch on pull_request, so a PR can't
+# alter the guard, and it needs no secrets.
+on: pull_request
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Only the registry owner may change data/sponsored.json
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO:     ${{ github.repository }}
+          NUM:      ${{ github.event.pull_request.number }}
+          AUTHOR:   ${{ github.event.pull_request.user.login }}
+          ASSOC:    ${{ github.event.pull_request.author_association }}
+        run: |
+          set -euo pipefail
+          # The registry owner's account. author_association == OWNER also passes, so this
+          # survives an account rename or a future org migration without editing the workflow.
+          ALLOW="WebTigers"
+
+          CHANGED=$(gh api "repos/$REPO/pulls/$NUM/files" --paginate --jq '.[].filename')
+          if ! printf '%s\n' "$CHANGED" | grep -qx 'data/sponsored.json'; then
+            echo "✓ data/sponsored.json not modified — nothing to guard."
+            exit 0
+          fi
+
+          echo "PR #$NUM by '$AUTHOR' ($ASSOC) modifies data/sponsored.json"
+          if [ "$AUTHOR" = "$ALLOW" ] || [ "$ASSOC" = "OWNER" ]; then
+            echo "✓ authorized — curated placement change by the registry owner."
+            exit 0
+          fi
+
+          echo "::error file=data/sponsored.json::data/sponsored.json is WebTigers-curated paid placement — only the registry owner may change it. Remove that file from your PR; vendor listings go in data/<GitHubOrg>_<GitHubRepo>.json."
+          exit 1

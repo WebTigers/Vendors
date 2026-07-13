@@ -46,7 +46,10 @@ baked into `index.json` — **Tiger fetches it alongside the index and merges th
 time** (client-side, in `Tiger_Module_Registry`), so placement changes need no recompile. In the
 directory's default **Featured** sort, higher `priority` floats up with a badge; the Title and
 Latest sorts ignore it. Vendors **cannot** rank themselves — it's a separate curated file, a public
-commit, and auto-expires via `until`.
+commit, and auto-expires via `until`. **Enforced in CI:** `.github/workflows/guard-sponsored.yml`
+hard-fails any PR that modifies `data/sponsored.json` unless it's from the registry owner
+(`author_association == OWNER`, so it survives a rename), and `.github/CODEOWNERS` requires owner
+review. Make the guard a **required status check** in branch protection to seal it.
 
 ## Validate locally before you PR
 
