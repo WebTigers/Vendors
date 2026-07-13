@@ -51,15 +51,15 @@ Leave out the `review` block — the bot writes that.
 
 ### Media (logo / hero / screenshots / video)
 
-Directory media lives in **your module's own repo, in a dedicated `media/` folder** (e.g.
-`media/screenshots/`) — **not** `assets/`. `assets/` is your module's *runtime* files (the CSS/JS/
+Directory media lives in **your module's own repo, in a dedicated flat `media/` folder** (e.g.
+`media/logo.jpg`, `media/hero.jpg`, `media/screenshot-01.jpg`) — **not** `assets/`. `assets/` is your module's *runtime* files (the CSS/JS/
 images it serves — for a theme they're symlinked to the web root); directory media is marketing/docs,
 so keep it separate and out of what ships and gets served. `media/` only needs to be **committed at
 your release `ref`** — raw serves the git tree, so a release build can even exclude it from the
 installable zip and the URL still resolves. The registry only points at it, never hosts it. In
 `logo`, `hero`, `screenshots[]`, and `video` you give either:
 
-- a **repo-relative path** (`media/screenshots/01.png`) — Tiger resolves it against your pinned
+- a **repo-relative path** (`media/screenshot-01.jpg`) — Tiger resolves it against your pinned
   `ref` to `https://raw.githubusercontent.com/<org>/<repo>/<ref>/…`. Use the **same paths in your
   `README.md`** (GitHub renders them relatively) so one set of files serves both. *(Recommended.)*
 - a **full URL** — used as-is.
