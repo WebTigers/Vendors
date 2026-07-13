@@ -51,11 +51,15 @@ Leave out the `review` block — the bot writes that.
 
 ### Media (logo / hero / screenshots / video)
 
-Media lives in **your module's own repo** (e.g. `assets/`, `assets/screenshots/`) — the registry
-only points at it, never hosts it. In `logo`, `hero`, `screenshots[]`, and `video` you can give
-either:
+Directory media lives in **your module's own repo, in a dedicated `media/` folder** (e.g.
+`media/screenshots/`) — **not** `assets/`. `assets/` is your module's *runtime* files (the CSS/JS/
+images it serves — for a theme they're symlinked to the web root); directory media is marketing/docs,
+so keep it separate and out of what ships and gets served. `media/` only needs to be **committed at
+your release `ref`** — raw serves the git tree, so a release build can even exclude it from the
+installable zip and the URL still resolves. The registry only points at it, never hosts it. In
+`logo`, `hero`, `screenshots[]`, and `video` you give either:
 
-- a **repo-relative path** (`assets/screenshots/01.png`) — Tiger resolves it against your pinned
+- a **repo-relative path** (`media/screenshots/01.png`) — Tiger resolves it against your pinned
   `ref` to `https://raw.githubusercontent.com/<org>/<repo>/<ref>/…`. Use the **same paths in your
   `README.md`** (GitHub renders them relatively) so one set of files serves both. *(Recommended.)*
 - a **full URL** — used as-is.
@@ -79,7 +83,7 @@ Pin media to a release `ref` (not `main`) so it matches the reviewed version.
 - **YouTube / Vimeo**: paste a normal watch link. It's embedded **lazily via `youtube-nocookie`** —
   nothing loads from Google until a viewer clicks play.
 - Object form adds a **repo-hosted poster** so the card shows no third-party thumbnail:
-  `"video": { "src": "https://youtu.be/…", "poster": "assets/demo-poster.jpg" }`.
+  `"video": { "src": "https://youtu.be/…", "poster": "media/demo-poster.jpg" }`.
 
 ## 3. Open the PR
 
