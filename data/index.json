@@ -1,7 +1,7 @@
 {
     "schema": "tiger.registry-index/v1",
-    "generated_at": "2026-07-14T10:07:56+00:00",
-    "count": 2,
+    "generated_at": "2026-07-14T14:16:17+00:00",
+    "count": 3,
     "modules": [
         {
             "schema": "tiger.registry/v1",
@@ -81,6 +81,45 @@
                 "reviewed_at": "2026-07-13",
                 "reviewer": "tiger-vendor-bot",
                 "notes": "Public repo; theme.json + slug match (theme-grey-mist); TIGER.md present; MIT; release v0.1.2-beta present. Directory media (logo + hero) in media/. Screenshots gallery to follow."
+            }
+        },
+        {
+            "schema": "tiger.registry/v1",
+            "type": "code",
+            "slug": "code-utils",
+            "module": "Tiger Utility Snippets",
+            "vendor": "WebTigers",
+            "repository": "https://github.com/WebTigers/TigerCodeSnippets",
+            "website": "https://webtigers.com",
+            "contact": "support@webtigers.com",
+            "version": "0.1.0-beta",
+            "ref": "v0.1.0-beta",
+            "logo": "media/logo.jpg",
+            "description": "A pack of small, dependency-free PHP helper snippets for the Code Area \u2014 slug(), human_bytes(), time_ago() and friends. Install it, read the source, and activate the ones you want.",
+            "tiger_md": "https://raw.githubusercontent.com/WebTigers/TigerCodeSnippets/v0.1.0-beta/TIGER.md",
+            "keywords": [
+                "code",
+                "snippets",
+                "helpers",
+                "utilities",
+                "php"
+            ],
+            "category": "Developer",
+            "license": "MIT",
+            "pricing": {
+                "model": "free",
+                "pro_url": null
+            },
+            "requires": {
+                "tiger": ">=0.5",
+                "php": ">=8.1"
+            },
+            "review": {
+                "status": "accepted",
+                "reviewed_ref": "v0.1.0-beta",
+                "reviewed_at": "2026-07-14",
+                "reviewer": "tiger-vendor-bot",
+                "notes": "Public repo; valid module.json + TIGER.md at v0.1.0-beta; slug matches (code-utils); MIT license; release v0.1.0-beta present. type:code \u2014 a Code Area snippet pack: 6 dependency-free helper snippets in snippets/, each a self-describing tiger:snippet file defining one function_exists-guarded global function; no routes/controllers/schema. Directory media (logo) in media/."
             }
         }
     ]
