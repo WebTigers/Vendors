@@ -1,10 +1,11 @@
 {
     "schema": "tiger.registry-index/v1",
-    "generated_at": "2026-07-13T20:38:53+00:00",
+    "generated_at": "2026-07-14T07:44:07+00:00",
     "count": 2,
     "modules": [
         {
             "schema": "tiger.registry/v1",
+            "type": "app",
             "slug": "docs",
             "module": "Documentation",
             "vendor": "WebTigers",
@@ -39,8 +40,7 @@
                 "reviewed_at": "2026-07-08",
                 "reviewer": "tiger-vendor-bot",
                 "notes": "Public repo; valid module.json + TIGER.md; MIT license; release v0.1.0 present; module layout conforms."
-            },
-            "type": "plugin"
+            }
         },
         {
             "schema": "tiger.registry/v1",

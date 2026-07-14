@@ -1,6 +1,7 @@
 {
   "schema": "tiger.registry/v1",
 
+  "type": "app",
   "slug": "docs",
   "module": "Documentation",
   "vendor": "WebTigers",
