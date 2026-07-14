@@ -9,7 +9,7 @@
   "properties": {
     "schema":     { "const": "tiger.registry/v1" },
     "slug":       { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$", "description": "Module install slug. For a code module == module.json slug; for a theme == 'theme-' + theme.json key (e.g. theme-grey-mist). Not the repo name." },
-    "type":       { "type": "string", "enum": ["theme", "app", "plugin"], "description": "Searchable kind label — NON-behavioral. 'theme' = presentation, 'app' = a large feature/product, 'plugin' = a small tweak. Tiger detects real capabilities (theme.json, migrations/) at activation; this is only a directory filter. Optional; defaults to 'plugin' in the index if omitted." },
+    "type":       { "type": "string", "enum": ["theme", "app", "plugin", "code"], "description": "Searchable kind label. 'theme' = presentation, 'app' = a large feature/product, 'plugin' = a small tweak, 'code' = a shareable code snippet activated in the Code Area. Tiger detects real capabilities (theme.json, migrations/) at activation; this is mainly a directory filter. Optional; defaults to 'plugin' in the index if omitted." },
     "module":     { "type": "string", "maxLength": 120, "description": "Human module name." },
     "vendor":     { "type": "string", "maxLength": 120, "description": "Vendor / author name." },
 
