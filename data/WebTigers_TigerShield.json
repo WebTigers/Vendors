@@ -20,7 +20,7 @@
   "tiger_md": "https://raw.githubusercontent.com/WebTigers/TigerShield/v0.6.0-beta/TIGER.md",
 
   "keywords": ["security", "waf", "firewall", "crowdsec", "rate-limit", "captcha", "login-protection", "brute-force"],
-  "category": "Utility",
+  "category": "Security",
   "license": "BSD-3-Clause",
 
   "pricing": { "model": "free", "pro_url": null },

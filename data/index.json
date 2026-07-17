@@ -1,6 +1,6 @@
 {
     "schema": "tiger.registry-index/v1",
-    "generated_at": "2026-07-17T07:44:01+00:00",
+    "generated_at": "2026-07-17T08:07:22+00:00",
     "count": 4,
     "modules": [
         {
@@ -147,7 +147,7 @@
                 "login-protection",
                 "brute-force"
             ],
-            "category": "Utility",
+            "category": "Security",
             "license": "BSD-3-Clause",
             "pricing": {
                 "model": "free",

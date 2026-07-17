@@ -29,7 +29,7 @@
     "tiger_md":   { "type": "string", "format": "uri", "description": "Raw URL of the repo's TIGER.md (the 'View more' modal content)." },
 
     "keywords":   { "type": "array", "items": { "type": "string" }, "maxItems": 12 },
-    "category":   { "type": "string", "description": "Subject-matter DOMAIN (orthogonal to `type`). A theme can still be a Media-domain theme.", "enum": ["Content", "Commerce", "Auth", "Media", "Developer", "Integration", "Utility", "Other"] },
+    "category":   { "type": "string", "description": "Subject-matter DOMAIN (orthogonal to `type`). A theme can still be a Media-domain theme.", "enum": ["Content", "Commerce", "Auth", "Security", "Media", "Developer", "Integration", "Utility", "Other"] },
     "license":    { "type": "string", "description": "SPDX id or 'Proprietary'. Public code is required; the license may still be proprietary." },
 
     "pricing": {
